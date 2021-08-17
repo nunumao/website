@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: 
+    type: com.alibaba.druid.pool.DruidDataSource
+    username: 
+    password: 
+entity:
+  packages: com._365d1.model
+druid:
+  username: root
+  password: 

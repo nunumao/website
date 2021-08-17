@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${entity.get('title')+' | 365D1'}">365D1</title>
+    <meta name="keywords" th:content="${entity.get('keywords')}"/>
+    <meta name="description" th:content="${entity.get('description')}"/>
+    <th:block th:replace="fragment::meta"/>
+    <link rel="stylesheet" th:href="@{/css/editormd.preview.min.css}">
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragment::header"></div>
+    <section class="container d-flex justify-content-between align-items-start">
+        <article class="article-detail content-box px-10" style="overflow: hidden">
+            <h1 class="article-detail-title pt-10 p-lg-20 m-0" th:text="${entity.get('title')}"></h1>
+            <div class="article-detail-time d-flex pt-10 px-lg-20">
+                <div class="mr-10 mr-lg-20" th:text="${entity.get('category')}"></div>
+                <div class="mr-10 mr-lg-20" th:text="${#dates.format(entity.get('create_time'),'YYYY-MM-dd HH:mm')}"></div>
+                <div class="mr-10 mr-lg-20">浏览 [[${entity.get('view_num')}]]</div>
+            </div>
+            <div class="article-detail-intro mx-20 mt-30 d-none d-lg-block" th:unless="${#strings.isEmpty(entity.get('description'))}" th:text="${entity.get('description')}"></div>
+            <div id="article-main" class="article-detail-content content-main pt-20 markdown-body editormd-html-preview"
+                 th:utext="${entity.get('content')}"></div>
+        </article>
+        <div th:replace="fragment::sidebar (list=${category})"></div>
+    </section>
+    <script th:src="@{/plugin/markdown/lib/marked.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/prettify.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/raphael.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/underscore.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/sequence-diagram.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/flowchart.min.js}"></script>
+    <script th:src="@{/plugin/markdown/lib/jquery.flowchart.min.js}"></script>
+    <script th:src="@{/plugin/markdown/editormd.min.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            editormd.markdownToHTML("article-main", {
+                htmlDecode: "style,script,iframe",
+                tocm: true,
+                emoji: true,
+                taskList: true,
+                tex: true,
+                flowChart: true,
+                sequenceDiagram: true
+            });
+        });
+    </script>
+    <div th:replace="fragment::footer"></div>
+</div>
+</body>
+</html>

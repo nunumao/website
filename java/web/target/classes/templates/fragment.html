@@ -1,0 +1,183 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="meta">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="author" content="292018748@qq.com"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <script th:src="@{/plugin/jquery-3.6.0.min.js}"></script>
+    <script defer="defer" th:src="@{/js/755.min.js}"></script>
+    <script defer="defer" th:src="@{/js/script.min.js}"></script>
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/image/favicon.ico}" />
+    <link th:href="@{/css/style.min.css}" rel="stylesheet">
+</th:block>
+
+<header th:fragment="header" class="mb-10 mb-sm-20">
+    <div class="top-navigation d-none d-sm-block">
+        <div class="container">
+            <div class="row">
+                <div class="slogan col-8">书上得来终觉浅，绝知此事要躬行</div>
+                <div class="col-4"></div>
+            </div>
+        </div>
+    </div>
+    <div class="header-navigation bg-white">
+        <div class="container">
+            <div class="row">
+                <a href="/" class="logo col-2">
+                    <div class="d-flex">
+                        <div class="logo-img">
+                            <img class="img-fluid"
+                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAACCklEQVRoge1ai3HCMAx95VggHSEegY4AI5QR6AjqCPUIMEIZgY5QRjArZIT2XKefJAL8SbHM8e5y4ZMofvhJliXuYEGmBvCIMnGAVttpO/QdgLpQIg2A7aR9U2UeTDKmPQMHAItCxt5RUZ8IoNXh0iOKApnOXZPRDGfG1RAZSusUyBCAl8BnNL2zle7Ghsy0oXcRRiRural6Z+ug81bjltQTtHqLsNtBbmnVX9GHjAGZWYohKT5iCb2DTHR2ESotDufWnfrPMTuTQbyCjJXaJnQQ6URi9E1m1QYNLqNYg8weWu1DTOaRlv3Ftbq3r45csQs1mddHtHoGsGS+qUBmHWIqv7O79YSbmVWIGRlRy83MMMdzvuQFSSkKNyvke7McInzI9d4nSUsa+yHXOr0XGelE4JvfSSPCLa5etYQSZqRIaTXMZwUS0epKiPARiiM3gDRpcY59I5ITc+bZXnW2Eoh4VVuk+0hzJJINIIcIGa5e5l2+lTQj3N7DuwghgwiZHbPwNSHVlPxEnKQ4Jw8qCY1R14qHmwk+5Lrtr3AirhhOJ/Ko4GbT/xJxuVP1U7h2x7ka7zKm2ZROhMxHso1fLGIr81LCr91QqZT2Ql5nH7E/ckki36nGvs2ftr7phw/CiGj1MNaDx8atqysNfWlVKe2vC6OzmA6J2PZXgbg6aS0K/ofQaCE8PwB8Aghtc+y50lP2AAAAAElFTkSuQmCC">
+                        </div>
+                        <h1 class="ml-20">365D1</h1>
+                    </div>
+                </a>
+                <div class="col-1"></div>
+                <div class="d-lg-none col-9">
+                    <div class="d-flex justify-content-end align-items-center">
+                        <div id="menu-btn">打开</div>
+                    </div>
+                </div>
+                <div class="nav col-9 d-none d-lg-flex justify-content-end">
+                    <div><a th:class="${topActive == null ? 'active' : ''}" href="/">首页</a></div>
+                    <div th:each="item:${CATEGORY_LIST}">
+                        <a th:class="${topActive == item.id} ? 'active' : ''" th:text="${item.name}"
+                           th:href="@{'/list/'+${item.id}+'.html'}"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="mobile-nav" style="display: none;" class="mobile-menu">
+        <div class="menu">
+            <div><a th:class="${topActive == null ? 'active' : ''}" href="/">首页</a></div>
+            <div th:each="item:${CATEGORY_LIST}">
+                <a th:class="${topActive == item.id} ? 'active' : ''" th:text="${item.name}"
+                   th:href="@{'/list/'+${item.id}+'.html'}"></a>
+            </div>
+        </div>
+    </div>
+</header>
+
+<aside class="sidebar d-none d-sm-block" th:fragment="sidebar">
+    <div class="content-box mb-20" th:if="${list}">
+        <div class="content-title">推荐栏目</div>
+        <div class="content-main">
+            <div class="top-cate d-flex flex-wrap">
+                <div th:each="item:${list}"><a th:text="${item.name}" th:href="@{'/list/'+${item.id}+'.html'}">游戏辅助</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mb-20">
+        <div class="tabs d-flex">
+            <div class="active">
+                最新文章
+            </div>
+            <div>
+                热门推荐
+            </div>
+            <div>
+                点击排行
+            </div>
+        </div>
+        <div class="content-main tabs-content">
+            <div class="top-list">
+                <div class="top-list-title">最新文章</div>
+                <div class="top-list-item">
+                    <div class="item d-flex" th:each="item:${NEW_LIST}">
+                        <div class="thumb">
+                            <a th:href="@{'/detail/'+${item.get('category_id')}+'/'+${item.get('id')+'.html'}}">
+                                <img class="img-fluid" th:src="@{'/upload/'+${item.get('thumb')}}">
+                            </a>
+                        </div>
+                        <div class="info flex-fluid d-flex flex-column justify-content-between align-items-stretch">
+                            <a th:href="@{'/detail/'+${item.get('category_id')}+'/'+${item.get('id')+'.html'}}">
+                                <h2 class="text-ellipsis-2" th:text="${item.get('title')}"></h2>
+                            </a>
+                            <div class="intro"
+                                 th:text="${#dates.format(item.get('create_time'),'YYYY-MM-dd HH:mm')}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-box mb-20">
+        <div class="content-title">关于我</div>
+        <div class="content-main">
+            <div class="about-me">
+                <div class="avatar float-left"><img class="face" th:src="@{/image/face.jpg}"></div>
+                <h2 class="name">南宁·野猪佩奇</h2>
+                <p class="intro">
+                    大龄程序猿一只，目前任职CTO，担任过PHP工程师，Android工程师，Java工程师，前端工程师。平时喜欢追逐新技术，乐于通过技术实践，将一些创意和想法变为现实。</p>
+            </div>
+            <div class="d-flex social">
+                <div>
+                    <div class="icon qq"></div>
+                </div>
+                <div>
+                    <div class="icon wechat"></div>
+                </div>
+                <div>
+                    <div class="icon email"></div>
+                </div>
+                <div>
+                    <div class="icon weibo"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-box">
+        <div class="content-title">友情链接</div>
+        <div class="content-main"></div>
+    </div>
+</aside>
+
+<footer th:fragment="footer" class="mt-20 py-20">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <div class="row">
+                    <div class="col d-flex flex-column align-items-center">
+                        <div><img class="img-fluid" th:src="@{/image/wechat.png}"/></div>
+                        <div class="mt-20 d-none d-lg-block">我的微信</div>
+                    </div>
+                    <div class="col d-none d-sm-flex flex-column align-items-center">
+                        <div><img class="img-fluid" th:src="@{/image/mp.png}"/></div>
+                        <div class="mt-20">微信公众号</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8 col-lg-4">
+                <div>本站简介</div>
+                <div class="mt-20">欢迎大家关注订阅号或加我微信与我一起聊聊技术，我只想帮助各位解决技术问题，或者被各位帮助解决技术问题。</div>
+            </div>
+            <div class="col-4 col-lg-4 d-none d-lg-block">
+                <div>温馨提示</div>
+                <div class="mt-20">转载请保留原文出处，网站所涉及内容均用于学习交流，不用于任何商业用途。如内容有错误，欢迎指出和发送到我的邮箱:292018748@qq.com</div>
+                <div class="d-flex mt-50">
+                    <div>备案号：</div>
+                    <div><a target="_blank" href="http://www.beian.miit.gov.cn">桂ICP备16008091号-1</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</html>

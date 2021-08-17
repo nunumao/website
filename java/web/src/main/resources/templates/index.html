@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>365D1 | 热爱软件研发的^(*￣(oo)￣)^</title>
+    <meta name="keywords" content="南宁软件研发,南宁科技,JAVA工程师,架构师"/>
+    <meta name="description" content=""/>
+    <th:block th:replace="fragment::meta"/>
+    <script th:src="@{/plugin/echarts.min.js}"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="fragment::header"></div>
+    <section class="container d-flex justify-content-between align-items-start">
+        <article class="article-list content-box">
+            <div class="article-list-item d-flex" th:each="item:${TOP_LIST}">
+                <div class="thumb">
+                    <img class="img-fluid" th:src="@{'/upload/'+${item.get('thumb')}}">
+                </div>
+                <div class="info pl-20 flex-fluid d-flex flex-column justify-content-between">
+                    <div class="title">
+                        <a th:href="@{'/detail/'+${item.get('category_id')}+'/'+${item.get('id')+'.html'}}">
+                            <h2 th:text="${item.get('title')}"></h2>
+                        </a>
+                    </div>
+                    <div class="intro d-none d-lg-block flex-fluid" th:text="${item.get('description')}"></div>
+                    <div class="time d-flex">
+                        <div class="mr-10">分类: <span th:text="${item.get('category')}"></span></div>
+                        <div class="mr-10 mr-10 d-none d-lg-block" th:text="${#dates.format(item.get('create_time'),'YYYY-MM-dd HH:mm')}"></div>
+                        <div class="mr-10">浏览: [[${item.get('view_num')}]]</div>
+                        <div class="mr-10">点赞: 0</div>
+                    </div>
+                </div>
+            </div>
+        </article>
+        <div th:replace="fragment::sidebar"></div>
+    </section>
+    <div th:replace="fragment::footer"></div>
+</div>
+</body>
+</html>

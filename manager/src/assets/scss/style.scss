@@ -1,0 +1,48 @@
+@import "functions";
+@import "variables";
+@import "mixins";
+@import "root";
+@import "reboot";
+@import "type";
+@import "images";
+@import "code";
+@import "grid";
+@import "transitions";
+@import "media";
+@import "utilities";
+@import "print";
+@import "tables";
+
+html,
+body,
+#app {
+    height: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+}
+
+.el-card.is-always-shadow,
+.el-card.is-hover-shadow:focus,
+.el-card.is-hover-shadow:hover {
+    box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.05) !important;
+}
+
+thead {
+    tr {
+        th {
+            background: #f5f7fa !important;
+            color: #909399;
+            font-size: 14px;
+        }
+    }
+}
+
+.el-input {
+    width: auto !important;
+}
+.el-pagination__editor.el-input {
+    width: 50px !important;
+}
+.el-textarea {
+    min-width: 350px;
+    width: auto !important;
+}

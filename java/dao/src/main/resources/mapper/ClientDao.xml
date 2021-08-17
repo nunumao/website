@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com._365d1.dao.ClientDao">
+
+    <select id="" resultType="com._365d1.model.Rule">
+        SELECT
+            id,
+            `name`,
+            (SELECT path FROM rule WHERE parent_id = r.id AND menu = 1 LIMIT 1) as path,
+            (SELECT apis FROM rule WHERE parent_id = r.id AND menu = 1 LIMIT 1) as apis
+        FROM
+            rule r
+        WHERE
+            type <![CDATA[<]]> 2
+            AND page = 0
+        ORDER BY
+            sort ASC
+    </select>
+
+</mapper>

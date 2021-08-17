@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com._365d1.dao.ContentDao">
+
+    <select id="selectPage" resultType="java.util.HashMap">
+        SELECT
+            a.*,
+            c.`name` AS category
+        FROM
+        ${table} a
+        JOIN category c ON a.category_id = c.id
+        <where>
+            <if test="categoryId != null and categoryId != 0">
+                category_id = #{categoryId}
+            </if>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%',#{title},'%')
+            </if>
+        </where>
+        ORDER BY a.create_time DESC
+    </select>
+
+    <select id="table4category" resultType="java.lang.String">
+        SELECT table_name FROM model WHERE id IN(
+            SELECT DISTINCT model_id FROM category
+            <where>
+                id IN
+                <foreach item="i" collection="list" separator="," open="(" close=")">
+                    #{i}
+                </foreach>
+            </where>
+            GROUP BY model_id
+        )
+    </select>
+
+    <select id="selectAllPage" resultType="java.util.HashMap">
+        SELECT
+            t.id,t.category_id,c.`name` AS category,t.title,t.thumb,t.description,t.view_num,t.create_time
+        FROM
+        (
+            ${tables}
+        ) AS t
+        JOIN category c ON t.category_id = c.id
+        <where>
+            t.category_id IN
+            <foreach item="i" collection="list" separator="," open="(" close=")">
+                #{i}
+            </foreach>
+        </where>
+        ORDER BY t.create_time DESC
+    </select>
+
+    <select id="showColumn" resultType="com._365d1.model.SqlField">
+        SHOW COLUMNS FROM ${table}
+    </select>
+
+    <select id="select" resultType="java.util.HashMap">
+        SELECT
+        *
+        FROM
+        ${table}
+        <where>
+            <if test="categoryId != null and categoryId != ''">
+                category_id = #{categoryId}
+            </if>
+            <if test="title != null and title != ''">
+                AND title LIKE CONCAT('%',#{title},'%')
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
+    <select id="selectOne" resultType="java.util.HashMap">
+        SELECT
+        	a.*,
+            b.*,
+            c.`name` as category
+        FROM
+            ${table} a
+            JOIN ${table}_data b ON a.id = b.${table}_id
+            JOIN category c ON a.category_id = c.id
+        WHERE a.id = #{id}
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="data.id">
+        INSERT INTO ${table}
+        <foreach collection="data" item="value" index="key" open="(" separator="," close=")">
+            ${key}
+        </foreach>
+        VALUES
+        <foreach collection="data" item="value" index="key" open="(" separator="," close=")">
+            ${value}
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="java.util.Map">
+        UPDATE ${table} SET
+        <foreach collection="data" item="value" index="key" separator=",">
+            ${key} = ${value}
+        </foreach>
+        <where>
+            ${primary} = #{id}
+        </where>
+    </update>
+
+    <update id="updateView">
+
+    </update>
+
+    <select id="top" resultType="java.util.HashMap">
+        SELECT
+            a.*
+        FROM
+            article a
+            JOIN top t ON a.id = t.detail_id
+        ORDER BY
+            a.create_time DESC
+        LIMIT 10
+    </select>
+
+</mapper>

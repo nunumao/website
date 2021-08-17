@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com._365d1.dao.ModelDao">
+
+    <insert id="insertModelTable">
+        CREATE TABLE `${table}`  (
+            `id` int(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `category_id` int(11) NULL,
+            `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+            `thumb` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+            `keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+            `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+            `view_num` int(11) NULL DEFAULT 0,
+            `is_top` tinyint(1) NULL DEFAULT 0,
+            `create_time` datetime(0) NULL,
+            `status` tinyint(1) NULL DEFAULT 1,
+            PRIMARY KEY (`id`)
+        ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '内容:${name}表' ROW_FORMAT = Dynamic
+    </insert>
+
+    <insert id="insertModelExtendTable">
+        CREATE TABLE `${table}_data`  (
+            `data_id` int(0) UNSIGNED NOT NULL AUTO_INCREMENT,
+            `${table}_id` int(11) NULL,
+            `content` text NULL,
+            `origin` text NULL,
+            PRIMARY KEY (`data_id`)
+        ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '内容:${name}扩展表' ROW_FORMAT = Dynamic
+    </insert>
+
+    <delete id="deleteModelTable">
+        DROP TABLE IF EXISTS `${table}`
+    </delete>
+
+    <delete id="deleteModelExtendTable">
+        DROP TABLE IF EXISTS `${table}_data`
+    </delete>
+
+</mapper>

@@ -1,0 +1,11 @@
+jwt:
+  key: z5wZPGVJi6rduOHK8NasIxACDBF3c2tn
+swagger:
+  enable: true
+setting:
+  debug: true
+minio:
+  endpoint: http://oss.365d1.com
+  access: WU1JEQOGGAZ4X0Z3LZZ1
+  secret: asDON4lfeyFrAtcq+vbYHYOoSwnvJQqT+hORNRTZ
+  bucket: website
